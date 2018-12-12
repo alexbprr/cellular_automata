@@ -38,6 +38,9 @@ struct TAc
     int t_cur;
     int dimension;
     int neighbourhood;
+    // ANOTAÇÃO
+    // O que os valores de `neighbourhood` significam? Quantidade de vizinhos?
+
     char* name;
     FILE* fp;
 };

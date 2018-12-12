@@ -6,6 +6,10 @@ Ac* createAC(int dimension, int m, int n, int neighbourhood)
   novoac->lin = m;
   novoac->col = n;
   novoac->domain = malloc(2*sizeof(Cell**));
+  // ANOTAÇÃO
+  // 2 simboliza .... ?
+  // Talvez uma constante global pra esclarecer?
+
   novoac->dimension = dimension;
   novoac->neighbourhood = neighbourhood;
   for (int i=0; i < 2; i++)
@@ -27,6 +31,11 @@ Ac* createAC(int dimension, int m, int n, int neighbourhood)
         //novoac->domain[i][j][k].rules = (ComplexRule*)malloc(50*sizeof(ComplexRule));
         novoac->domain[i][j][k].rules = (Rule*)malloc(N_RULES*sizeof(Rule));
         novoac->domain[i][j][k].complexrules = (ComplexRule*)malloc(N_RULES*sizeof(ComplexRule));
+        // ANOTAÇÃO
+        // Alocar diretamente 50 espaços por célula pode ser custoso para
+        // Automatos maiores. Talvez um `int` para representar a quantidade presente
+        // de regras e realocar sempre que estivermos prestes a estourar esse
+        // limite seja mais vantajoso
 
         // novoac->domain[i][j][k].rules = (Rule**)malloc(N_RULES*sizeof(Rule*));
         // novoac->domain[i][j][k].complexrules = (ComplexRule**)malloc(N_RULES*sizeof(ComplexRule*));
@@ -50,6 +59,9 @@ void initializeNeighbourhood(Ac* ac, Cell* c, int t)
   if (ac->dimension == 1 && ac->neighbourhood == 1)
   {
     c->neighbours = (Cell**)malloc(2*sizeof(Cell*));
+    // ANOTAÇÃO
+    // Valor 2 reaparece aqui
+
     if (c->x > 0)
     {
       c->neighbours[num_neighbours] = &ac->domain[t][c->x-1][c->y];
@@ -64,6 +76,9 @@ void initializeNeighbourhood(Ac* ac, Cell* c, int t)
   else if (ac->dimension == 1 && ac->neighbourhood == 2)
   {
     c->neighbours = (Cell**)malloc(4*sizeof(Cell*));
+    // ANOTAÇÃO
+    // Então 2 * ac->neighbourhood * ac->dimension ?
+
     if (c->x > 0)
     {
       c->neighbours[num_neighbours] = &ac->domain[t][c->x-1][c->y];
